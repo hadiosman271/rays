@@ -32,10 +32,12 @@ int main(void) {
 	};
 	ms.field = calloc(1, sizeof(Cell [ms.rows * ms.cols]));
 
-	Rectangle field_bbox = get_element_bbox((Element) {
-		.size = { screen.width * .9, screen.width * .9 / COLS * ROWS }, .padding = { 0, 20 },
-		.anchored_to = screen, .anchor_pos = { A_INSIDE, A_YCENTER, A_XCENTER }
-	});
+	Rectangle field_bbox = get_bbox(
+		(Vector2) { screen.width * .9, screen.width * .9 / COLS * ROWS },
+		(Vector2) { 0, 20 },
+		screen,
+		(Anchor) { A_INSIDE, A_YCENTER, A_XCENTER }
+	);
 	float cell_width = field_bbox.width / COLS;
 
 	while (!WindowShouldClose()) {

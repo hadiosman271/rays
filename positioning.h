@@ -9,41 +9,39 @@ typedef struct {
 	AnchorX x;
 } Anchor;
 
-typedef struct Element {
-	Vector2 size;
-	Vector2 padding;
-	Rectangle anchored_to;
-	Anchor anchor_pos;
-} Element;
-
-Rectangle get_element_bbox(Element e) {
-	int x = e.anchored_to.x, y = e.anchored_to.y;
-	switch (e.anchor_pos.type) {
+Rectangle get_bbox(
+	Vector2 size,
+	Vector2 padding,
+	Rectangle anchored_to,
+	Anchor anchor_pos
+) {
+	int x = anchored_to.x, y = anchored_to.y;
+	switch (anchor_pos.type) {
 	case A_INSIDE:
-		switch (e.anchor_pos.x) {
-			case A_LEFT:    x += e.padding.x; break;
-			case A_XCENTER: x += (e.anchored_to.width - e.size.x) / 2 + e.padding.x; break;
-			case A_RIGHT:   x += e.anchored_to.width - e.size.x - e.padding.x; break;
+		switch (anchor_pos.x) {
+			case A_LEFT:    x += padding.x; break;
+			case A_XCENTER: x += (anchored_to.width - size.x) / 2 + padding.x; break;
+			case A_RIGHT:   x += anchored_to.width - size.x - padding.x; break;
 		}
-		switch (e.anchor_pos.y) {
-			case A_TOP:     y += e.padding.y; break;
-			case A_YCENTER: y += (e.anchored_to.height - e.size.y) / 2 + e.padding.y; break;
-			case A_BOTTOM:  y += e.anchored_to.height - e.size.y - e.padding.y; break;
+		switch (anchor_pos.y) {
+			case A_TOP:     y += padding.y; break;
+			case A_YCENTER: y += (anchored_to.height - size.y) / 2 + padding.y; break;
+			case A_BOTTOM:  y += anchored_to.height - size.y - padding.y; break;
 		}
 		break;
 	case A_RELATIVE:
-		switch (e.anchor_pos.x) {
-			case A_LEFT:    x += -(e.size.x + e.padding.x); break;
-			case A_XCENTER: x += (e.anchored_to.width - e.size.x) / 2 + e.padding.x; break;
-			case A_RIGHT:   x += e.anchored_to.width + e.padding.x; break;
+		switch (anchor_pos.x) {
+			case A_LEFT:    x += -(size.x + padding.x); break;
+			case A_XCENTER: x += (anchored_to.width - size.x) / 2 + padding.x; break;
+			case A_RIGHT:   x += anchored_to.width + padding.x; break;
 		}
-		switch (e.anchor_pos.y) {
-			case A_TOP:     y += -(e.size.y + e.padding.y); break;
-			case A_YCENTER: y += (e.anchored_to.height - e.size.y) / 2 + e.padding.y; break;
-			case A_BOTTOM:  y += e.anchored_to.height + e.padding.y; break;
+		switch (anchor_pos.y) {
+			case A_TOP:     y += -(size.y + padding.y); break;
+			case A_YCENTER: y += (anchored_to.height - size.y) / 2 + padding.y; break;
+			case A_BOTTOM:  y += anchored_to.height + padding.y; break;
 		}
 		break;
 	}
 
-	return (Rectangle) { x, y, e.size.x, e.size.y };
+	return (Rectangle) { x, y, size.x, size.y };
 }
