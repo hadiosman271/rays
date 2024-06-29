@@ -15,7 +15,7 @@ Rectangle get_bbox(
 	Rectangle anchored_to,
 	Anchor anchor_pos
 ) {
-	int x = anchored_to.x, y = anchored_to.y;
+	float x = anchored_to.x, y = anchored_to.y;
 	switch (anchor_pos.type) {
 	case A_INSIDE:
 		switch (anchor_pos.x) {
