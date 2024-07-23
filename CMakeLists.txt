@@ -2,15 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(rays C)
 
-if (NOT DEFINED RAYLIB_PATH)
-	message(FATAL_ERROR "RAYLIB_PATH not defined")
-endif (NOT DEFINED RAYLIB_PATH)
-if (NOT DEFINED RAYGUI_PATH)
-	message(FATAL_ERROR "RAYGUI_PATH not defined")
-endif (NOT DEFINED RAYGUI_PATH)
-
-add_subdirectory(${RAYLIB_PATH} ${RAYLIB_PATH}/build)
-add_subdirectory(${RAYGUI_PATH}/projects/CMake ${RAYGUI_PATH}/build)
+add_subdirectory(lib/raylib)
+add_subdirectory(lib/raygui/projects/CMake)
 
 file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
 
